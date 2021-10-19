@@ -1,15 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.Exception;
-import java.util.ArrayList;
 public class Comanda extends JFrame implements ActionListener {
     JButton button;
     JPanel newPanel;
     JLabel codeLabel, piecesLabel, cutLabel;
     final JTextField textField1, textField2, textField3;
-    public int code, pieces, cut;
-
+    public static int code;
+    public static int pieces;
+    public static int cut;
+    public static int cuts[] = new int[10000];
     Comanda() {
         codeLabel = new JLabel();
         codeLabel.setText("Cod");
@@ -18,7 +18,6 @@ public class Comanda extends JFrame implements ActionListener {
         piecesLabel = new JLabel();
         piecesLabel.setText("Bucati");
         textField2 = new JTextField(15);
-
         cutLabel = new JLabel("Piese Taiate");
         textField3 = new JTextField(15);
         //create submit button
@@ -39,9 +38,15 @@ public class Comanda extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
     }
-    public String toString(){
+    public String toString(int cuts){
         return "Codul este " + this.code + " si sunt nevoie de " + this.pieces + " bucati si materia prima trebuie taiata in "
-                + this.cut + " bucati";
+                + cuts + " bucati";
+    }
+    public static int materialNeeded(int cutmaterial){
+        if((pieces/cutmaterial)*cutmaterial<pieces)
+            return pieces/cutmaterial+1;
+        else
+            return pieces/cutmaterial;
     }
     public void actionPerformed(ActionEvent e)     //pass action listener as a parameter
     {   String codeValue = textField1.getText();
@@ -52,7 +57,11 @@ public class Comanda extends JFrame implements ActionListener {
         cut = Integer.parseInt(cutValue);
         if (e.getSource() == button && code/10000<1) {
             dispose();
-            JOptionPane.showMessageDialog(null,toString(),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+            if(cuts[code] == 0)
+                cuts[code]=cut;
+            else
+                JOptionPane.showMessageDialog(null,"Pentru codul " + code + " se taie " + cuts[code] + " de bucati din materia prima","",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
             Timp time = new Timp();
             time.setVisible(true);
         }
@@ -60,20 +69,15 @@ public class Comanda extends JFrame implements ActionListener {
             dispose();
             String s = JOptionPane.showInputDialog("Codul trebuie sa fie de maxim patru cifre: ");
             code = Integer.parseInt(s);
-            JOptionPane.showMessageDialog(null,toString(),"Comanda",JOptionPane.INFORMATION_MESSAGE);
-            try {
-                Thread.currentThread().sleep(1750);
-            } catch (InterruptedException ae) {
-                ae.printStackTrace();
-            }
+            cuts[code] = cut;
+            if(cuts[code] == 0)
+                cuts[code] = cut;
+            else
+                JOptionPane.showMessageDialog(null,"Pentru codul " + code + " se taie " + cuts[code] + " de bucati din materia prima","",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
             Timp time = new Timp();
             time.setVisible(true);
         }
     }
-    public int materialNeeded(int cutmaterial){
-        if((this.pieces/cutmaterial)*cutmaterial<this.pieces)
-            return this.pieces/cutmaterial+1;
-        else
-            return this.pieces/cutmaterial;
-    }
+
 }

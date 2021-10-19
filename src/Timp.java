@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 public class Timp extends Comanda{
-    static int  days;
-    static int pieces_a_day;
+    int  days;
+    int pieces_a_day;
     JButton button;
     JPanel newPanel;
     JLabel daysLabel, piecesLabel;
@@ -33,8 +33,8 @@ public class Timp extends Comanda{
         setLocationRelativeTo(null);
         pack();
     }
-    public static Boolean checkTime(int pieces){
-        if(days*pieces_a_day < pieces)
+    public Boolean checkTime(int pieces){
+        if(this.days*this.pieces_a_day < pieces)
             return false;
         else
             return  true;
@@ -47,6 +47,21 @@ public class Timp extends Comanda{
         if (e.getSource() == button ) {
             dispose();
             JOptionPane.showMessageDialog(null,toString(),"Timp",JOptionPane.INFORMATION_MESSAGE);
+            if(Comanda.materialNeeded(Comanda.cuts[code])>Main.primeMaterial)
+                JOptionPane.showMessageDialog(null,"Nu este destula materie prima","Comanda",JOptionPane.ERROR_MESSAGE);
+            else {
+                if (checkTime(Comanda.pieces) == false)
+                    JOptionPane.showMessageDialog(null, "Aceasta comanda a avut intarzieri, clientul va fi nemultumit", "Comanda", JOptionPane.WARNING_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(null, "Comanda a fost realizata la timp", "Comanda", JOptionPane.INFORMATION_MESSAGE);
+                Main.primeMaterial = Main.primeMaterial - Comanda.materialNeeded(Comanda.cuts[code]);
+                JOptionPane.showMessageDialog(null, "Au mai ramas " + Main.primeMaterial + " bucati de materia prima", "Cantitate", JOptionPane.INFORMATION_MESSAGE);
+                if (Main.primeMaterial > 0) {
+                    Comanda com = new Comanda();
+                    com.setSize(300, 100);
+                    com.setVisible(true);
+                }
+            }
         }
     }
 }
