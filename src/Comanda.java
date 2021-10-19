@@ -57,11 +57,18 @@ public class Comanda extends JFrame implements ActionListener {
         cut = Integer.parseInt(cutValue);
         if (e.getSource() == button && code/10000<1) {
             dispose();
-            if(cuts[code] == 0)
-                cuts[code]=cut;
-            else
+            if(cuts[code] == 0){
+                cuts[code] = cut;
                 JOptionPane.showMessageDialog(null,"Pentru codul " + code + " se taie " + cuts[code] + " de bucati din materia prima","",JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                if(cuts[code] == cut)
+                    JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+                else{
+                    JOptionPane.showMessageDialog(null,"Pentru codul " + code + " se taie " + cuts[code] + " de bucati din materia prima","",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
             Timp time = new Timp();
             time.setVisible(true);
         }
@@ -70,11 +77,18 @@ public class Comanda extends JFrame implements ActionListener {
             String s = JOptionPane.showInputDialog("Codul trebuie sa fie de maxim patru cifre: ");
             code = Integer.parseInt(s);
             cuts[code] = cut;
-            if(cuts[code] == 0)
+            if(cuts[code] == 0){
                 cuts[code] = cut;
-            else
                 JOptionPane.showMessageDialog(null,"Pentru codul " + code + " se taie " + cuts[code] + " de bucati din materia prima","",JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                if(cuts[code] == cut)
+                    JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+                else{
+                    JOptionPane.showMessageDialog(null,"Pentru codul " + code + " se taie " + cuts[code] + " de bucati din materia prima","",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,toString(cuts[code]),"Comanda",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
             Timp time = new Timp();
             time.setVisible(true);
         }
