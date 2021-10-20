@@ -84,7 +84,7 @@ public class Comanda extends JFrame implements ActionListener {
             dispose();
             if(cuts[code] == 0){
                 cuts[code] = cut;
-                JOptionPane.showMessageDialog(null,toString(cuts[code]),"",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,toString(cuts[code]),"",JOptionPane.INFORMATION_MESSAGE);
             }
             else{
                 if(cuts[code] == cut)
