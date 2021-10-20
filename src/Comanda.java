@@ -75,7 +75,10 @@ public class Comanda extends JFrame implements ActionListener {
         else{
             dispose();
             String s = JOptionPane.showInputDialog("Codul trebuie sa fie de maxim patru cifre: ");
-            code = Integer.parseInt(s);
+            while(s.length()>4){
+                s = JOptionPane.showInputDialog("Codul trebuie sa fie de maxim patru cifre: ");
+                code = Integer.parseInt(s);
+            }
             cuts[code] = cut;
             if(cuts[code] == 0){
                 cuts[code] = cut;
